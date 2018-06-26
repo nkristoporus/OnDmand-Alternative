@@ -1,0 +1,16 @@
+.container-fluid {
+	padding-top: 2%;
+}
+
+#result {
+	padding-left: 2%;
+	padding-right: 2%;
+}
+
+#filter {
+	background-color: #f7f7f7;
+}
+
+.container {
+	padding-top: 2%;
+}
