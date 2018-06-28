@@ -1,0 +1,50 @@
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+<nav class="navbar navbar-light bg-light">
+	  <a class="navbar-brand" href="/">OnDmand</a>
+	  <form class="form-inline">
+	    <input class="form-control mr-sm-2" type="search" placeholder="Search Jobs" aria-label="Search">
+		<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+	  </form>
+		<i class="fas fa-user fa-2x ml-2"></i>  
+	</nav>
+<div class="container">
+	<h1>Post Jobs</h1>
+<form method="post">
+  <div class="form-group row">
+    <label for="jobTitle" class="col-sm-2 col-form-label">Job Title</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="jobTitle">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="jobLocation" class="col-sm-2 col-form-label">Location</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="jobLocation">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="jobDate" class="col-sm-2 col-form-label">Date</label>
+    <div class="col-sm-10">
+      <input type="date" class="form-control" id="jobDate">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="jobPay" class="col-sm-2 col-form-label">Pay</label>
+    <div class="col-sm-10">
+      <input type="number" class="form-control" id="jobPay" min="1" placeholder="$5">
+    </div>
+  </div>
+  <div class="form-group row">
+  	<label for="jobDescription" class="col-sm-2 col-form-label">Description</label>
+  	<div class="col-sm-10">
+  		<textarea class="form-control" id="jobDescription" rows="4" cols="50"></textarea>
+  	</div>
+  </div>
+  <div class="form-group row">
+    <div class="col-sm-2"></div>
+    <div class="col-sm-10">
+      <button type="submit" class="btn btn-primary">Post</button>
+    </div> 
+  </div>
+</form>
+</div>
