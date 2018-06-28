@@ -17,7 +17,7 @@
 	</nav>
 <div class="container">
 	<h1>Post Jobs</h1>
-<form>
+<form method="post">
   <div class="form-group row">
     <label for="jobTitle" class="col-sm-2 col-form-label">Job Title</label>
     <div class="col-sm-10">
@@ -28,6 +28,18 @@
     <label for="jobLocation" class="col-sm-2 col-form-label">Location</label>
     <div class="col-sm-10">
       <input type="text" class="form-control" id="jobLocation">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="jobDate" class="col-sm-2 col-form-label">Date</label>
+    <div class="col-sm-10">
+      <input type="date" class="form-control" id="jobDate">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="jobPay" class="col-sm-2 col-form-label">Pay</label>
+    <div class="col-sm-10">
+      <input type="number" class="form-control" id="jobPay" min="1" placeholder="$5">
     </div>
   </div>
   <div class="form-group row">
