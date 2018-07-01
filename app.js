@@ -17,6 +17,13 @@ app.use(bodyParser.urlencoded({
 
 app.use(bodyParser.json());
 
+app.get("/orderByWage", (req, res) => {
+	connection.query("SELECT * FROM jobsDB ORDER BY wage DESC", (err, result) => {
+		if (err) throw err;
+		res.render("home.ejs", { jobList: result });
+	});
+});
+
 app.get("/", function(req, res){
 	connection.query("SELECT * FROM jobsDB", (err, result) => {
 		if (err) throw err;
