@@ -29,6 +29,14 @@ app.get("/post", function(req, res){
 	res.render("post.ejs");
 });
 
+app.get("/search", function(req,res){
+	connection.query("SELECT * FROM jobsDB", (err, result) => {
+		if (err) throw err;
+		res.render("home.ejs", {jobList: result, searchTerm: req.body.search});
+		//res.end('Fetched...');
+	});
+});
+
 connection.connect(err => {
 	if (err) {
 		console.error('error connecting: ' + err.stack);
