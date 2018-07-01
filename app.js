@@ -46,7 +46,17 @@ connection.connect(err => {
 	console.log("connected as id " + connection.threadId);
 });
 
-// Create DB
+// create DB
+app.get('/createDB', (req, res) => {
+	let sql = 'CREATE DATABASE jobsDB';
+	db.query(sql, (err, result) => {
+		if (err) throw err;
+		console.log(result);
+		res.send("Created DB");
+	})
+})
+
+// Create TABLE
 app.get('/createJobTable', (req, res) => {
 let sql = 'CREATE TABLE jobsDB(id int AUTO_INCREMENT, title VARCHAR(255), location VARCHAR(255), date DATE, wage INTEGER, description VARCHAR(1000), PRIMARY KEY (id))';
 	connection.query(sql, (err, result) => {
