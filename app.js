@@ -17,8 +17,19 @@ app.use(bodyParser.urlencoded({
 
 app.use(bodyParser.json());
 
-app.get("/orderByWage", (req, res) => {
-	connection.query("SELECT * FROM jobsDB ORDER BY wage DESC", (err, result) => {
+// order date ASCENDING
+app.get("/orderDate", (req, res) => {
+	connection.query(`SELECT * FROM jobsDB ORDER BY date ASC`, (err, result) => {
+		//console.log(result);
+		if (err) throw err;
+		res.render("home.ejs", { jobList: result });
+	});
+});
+
+// order the table by filter
+app.get("/orderBy/:filter", (req, res) => {
+	connection.query(`SELECT * FROM jobsDB ORDER BY ${req.params.filter}`, (err, result) => {
+		//console.log(result);
 		if (err) throw err;
 		res.render("home.ejs", { jobList: result });
 	});
@@ -115,9 +126,10 @@ app.get('/deletepost/:id', (req, res) => {
 		if (err) throw err;
 		console.log(result);
 		res.send("Post deleted");
-	})
-})
+	});
+});
 
+// get all
 app.get("/jobList", (req, res) => {
 	connection.query("SELECT * FROM jobsDB", (err, result) => {
 		if (err) throw err;
@@ -126,6 +138,7 @@ app.get("/jobList", (req, res) => {
 	});
 });
 
+// POST to Database,
 app.post("/post/validate", [
 	check("jobTitle").exists(),
 	check("jobLocation").exists(),
