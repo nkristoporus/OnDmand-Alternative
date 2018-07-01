@@ -49,7 +49,7 @@ connection.connect(err => {
 // create DB
 app.get('/createDB', (req, res) => {
 	let sql = 'CREATE DATABASE jobsDB';
-	db.query(sql, (err, result) => {
+	connection.query(sql, (err, result) => {
 		if (err) throw err;
 		console.log(result);
 		res.send("Created DB");
