@@ -6,7 +6,7 @@
 		<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
 		<a href="post">Post a Job</a>
 	  </form>
-		<i class="fas fa-user fa-2x ml-2"></i>  
+		<i class="fas fa-user fa-2x ml-2"></i>
 	</nav>
 
 <div class="container-fluid">
@@ -16,6 +16,28 @@
 		</div>
 		<div id="result">
 			<h4>Results for <strong>search-term</strong></h4>
+				<table id="table" >
+						<thead>
+								<tr>
+										<th>Job title</th>
+										<th>Location</th>
+										<th>Date</th>
+										<th>Wage</th>
+										<th>Description</th>
+								</tr>
+						</thead>
+						 <tbody>
+						 <% jobList.forEach(function (job) { %>
+								<tr>
+										<td><%= job.title %></td>
+										<td><%= job.location %></td>
+										<td><%= job.date %></td>
+										<td><%= job.wage %></td>
+										<td><%= job.description %></td>
+								</tr>
+						 <% }) %>
+						 </tbody>
+				</table>
 		</div>
 	</div>
 </div>

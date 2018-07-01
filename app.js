@@ -18,7 +18,11 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
 
 app.get("/", function(req, res){
-	res.render("home.ejs");
+	connection.query("SELECT * FROM jobsDB", (err, result) => {
+		if (err) throw err;
+		res.render("home.ejs", {jobList: result});
+		//res.end('Fetched...');
+	});
 });
 
 app.get("/post", function(req, res){
@@ -44,29 +48,25 @@ let sql = 'CREATE TABLE jobsDB(id int AUTO_INCREMENT, title VARCHAR(255), locati
 	});
 });
 
-app.get('/addpost1', (req, res) => {
-	let post = {
-		title: "Post one",
-		body: "This is post number 1"
-	};
-
-	let sql = 'INSERT INTO jobsDB SET ?';
-	let query = connection.query(sql, post, (err, result) => {
-		if (err) throw err;
-		console.log(result);
-		res.send("Post 1 added");
-	})
-});
-
 // Single Post
-app.get('/getJobs/:id', (req, res) => {
+app.get('/getJobsbyID/:id', (req, res) => {
 	let sql = `SELECT * FROM jobsDB WHERE id = ${req.params.id}`;
 	let query = connection.query(sql, (err, result) => {
 		if (err) throw err;
 		console.log(result);
 		res.send('Post fetched..');
-	})
+	});
 });
+
+app.get('/getJobsByTitle/:title', (req, res) => {
+	let jobTitle = req.params.title;
+	let sql = `SELECT * FROM jobsDB WHERE title = "${jobTitle}"`;
+	let query = connection.query(sql, (err, result) => {
+		if (err) throw err;
+		console.log(result);
+		res.send('Post fetched..');
+	})
+})
 
 // Update
 app.get('/updatepost/:id', (req, res) => {
@@ -88,14 +88,13 @@ app.get('/deletepost/:id', (req, res) => {
 	})
 })
 
-
 app.get("/jobList", (req, res) => {
 	connection.query("SELECT * FROM jobsDB", (err, result) => {
 		if (err) throw err;
 		console.log(result);
 		res.end('Fetched...');
-	})
-})
+	});
+});
 
 app.post("/post/validate", [
 	check("jobTitle").exists(),
@@ -103,7 +102,13 @@ app.post("/post/validate", [
 	check("jobDate").exists(),
 	check("jobPay").exists(),
 	check("jobDescription").exists(),
-], (req, res) => {
+], (req, res, next) => {
+	const errors = validationResult(req);
+
+	if (!errors.isEmpty()) {
+		return res.send("There are blank entries, please fill up the form correctly");
+	}
+
 	let post = {
 		title: req.body.jobTitle,
 		location: req.body.jobLocation,
@@ -116,7 +121,7 @@ app.post("/post/validate", [
 	let query = connection.query(sql, post, (err, result) => {
 		if (err) throw err;
 		console.log(result);
-		res.send(`Post ${post} added`);
+		res.redirect('/');
 	});
 
 });
