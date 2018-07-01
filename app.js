@@ -20,21 +20,25 @@ app.use(bodyParser.json());
 app.get("/", function(req, res){
 	connection.query("SELECT * FROM jobsDB", (err, result) => {
 		if (err) throw err;
-		res.render("home.ejs", {jobList: result});
-		//res.end('Fetched...');
+		res.render("home.ejs", { jobList: result });
 	});
 });
 
-app.get("/post", function(req, res){
+app.get("/post", (req, res) => {
 	res.render("post.ejs");
 });
 
-app.get("/search", function(req,res){
-	connection.query("SELECT * FROM jobsDB", (err, result) => {
+app.post("/search", (req, res) => {
+	let jobTitle = req.body.search;
+	console.log(jobTitle);
+
+	let sql = `SELECT * FROM jobsDB WHERE title LIKE "%${jobTitle}%"`;
+	let query = connection.query(sql, (err, result) => {
 		if (err) throw err;
-		res.render("home.ejs", {jobList: result, searchTerm: req.body.search});
-		//res.end('Fetched...');
-	});
+		console.log(result);
+		res.render("home.ejs", {jobList: result});
+		// res.send('Post fetched..');
+	})
 });
 
 connection.connect(err => {
@@ -76,6 +80,7 @@ app.get('/getJobsbyID/:id', (req, res) => {
 	});
 });
 
+// Get by Title
 app.get('/getJobsByTitle/:title', (req, res) => {
 	let jobTitle = req.params.title;
 	let sql = `SELECT * FROM jobsDB WHERE title = "${jobTitle}"`;
@@ -83,8 +88,8 @@ app.get('/getJobsByTitle/:title', (req, res) => {
 		if (err) throw err;
 		console.log(result);
 		res.send('Post fetched..');
-	})
-})
+	});
+});
 
 // Update
 app.get('/updatepost/:id', (req, res) => {
