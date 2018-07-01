@@ -7,10 +7,15 @@
     "bootstrap": "^4.1.1",
     "ejs": "^2.6.1",
     "express": "^4.16.3",
+    "express-validator": "^5.2.0",
     "jquery": "^3.3.1",
+    "mysql": "^2.15.0",
+    "pg-promise": "^8.4.4",
     "popper.js": "^1.14.3"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "nodemon": "^1.17.5"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
