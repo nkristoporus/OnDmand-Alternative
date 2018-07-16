@@ -21,9 +21,9 @@
 			  <a href="/orderBy/title" class="list-group-item list-group-item-action">Alphabetical</a>
 			</div>
 		</div>
-		<div id="result">
+		<div id="result" class="col-10">
 			<h4>Results for
-				<table id="table" >
+				<table id="table" class="table table-bordered">
 						<thead>
 								<tr>
 										<th>Job title</th>
@@ -41,10 +41,21 @@
 										<td><%= job.date %></td>
 										<td><%= job.wage %></td>
 										<td><%= job.description %></td>
+										<td>
+											<a href="/deletepost/<%= job.id %>">
+											<button id="delete" type="button" class="btn btn-primary">Delete</button>
+											</a>
+										</td>
+										<td>
+											<a href="/updatepost/<%= job.id %>">
+											<button id="update" type="button" class="btn btn-primary">Update</button>
+											</a>
+										</td>
 								</tr>
 						 <% }) %>
 						 </tbody>
 				</table>
+
 		</div>
 	</div>
 </div>
