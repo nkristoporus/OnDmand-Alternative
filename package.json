@@ -25,6 +25,7 @@
     "passport-twitter": "~1.0.4",
     "pg-promise": "^8.4.4",
     "popper.js": "^1.14.3",
+    "sequelize": "^4.38.0",
     "sort-by": "^1.2.0"
   },
   "devDependencies": {

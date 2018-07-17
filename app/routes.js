@@ -1,4 +1,6 @@
-module.exports = (app, passport) => {
+const { check, validationResult } = require('express-validator/check');
+
+module.exports = (app, passport, connection) => {
 
   // order date ASCENDING
   app.get("/orderDate", (req, res) => {
@@ -28,12 +30,12 @@ module.exports = (app, passport) => {
 
   // LOGIN PAGE
   app.get('/login', (req, res) => {
-    res.render('login.ejs', { message req.flash('loginMessage') });
+    res.render('login.ejs', { message: req.flash('loginMessage') });
   });
 
   // SIGN UP PAGE
   app.get('/signup', (req, res) => {
-    res.render('signup.ejs', { message req.flash('signupMessage') });
+    res.render('signup.ejs', { message: req.flash('signupMessage') });
   });
 
   app.get("/post", (req, res) => {
@@ -163,3 +165,10 @@ module.exports = (app, passport) => {
 
   });
 };
+
+const isLoggedIn = (req, res, next) => {
+  if (req.isAuthenticated())
+    return next();  // carry on
+
+  res.redirect('/');  // not isAuthenticated
+}

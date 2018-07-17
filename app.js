@@ -2,13 +2,12 @@ var express = require("express");
 var app = express();
 const mysql = require('mysql');
 const bodyParser = require("body-parser");
-const { check, validationResult } = require('express-validator/check');
 
 const passport = require('passport');
 const flash = require('connect-flash');
 const morgan = require('morgan');
 const session = require('express-session');
-const cookieParser = require('cookieParser');
+const cookieParser = require('cookie-parser');
 
 const configDB = require('./config/database.js');
 
@@ -27,6 +26,8 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
 app.use(cookieParser());
 
+app.set('view engine', 'ejs'); // set up ejs for templating
+
 // possport session
 app.use(session({ secret: 'bobbylovestoplayballs' }));
 app.use(passport.initialize());
@@ -34,10 +35,8 @@ app.use(passport.session());	// persistent login sessions
 app.use(flash());	// use connect-flash
 
 // routes =================================================
-require('./app/routes.js');
+require('./app/routes.js')(app, passport, connection);
 
 
-/
-
-// launch ============
+// launch =================================================
 app.listen(5000, process.env.IP);
