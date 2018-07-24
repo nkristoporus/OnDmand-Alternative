@@ -2,7 +2,7 @@ var express = require("express");
 var app = express();
 const mysql = require('mysql');
 const bodyParser = require("body-parser");
-
+const mongoose = require('mongoose')
 const passport = require('passport');
 const flash = require('connect-flash');
 const morgan = require('morgan');
@@ -17,6 +17,10 @@ const connection = mysql.createConnection({
 	password: 'root',
 	database: 'jobsDB'
 });
+
+mongoose.connect(configDB.url);	// connect to database
+
+require('./config/passport')(passport); // passport config
 
 
 app.use(bodyParser.urlencoded({

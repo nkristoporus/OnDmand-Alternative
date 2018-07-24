@@ -121,7 +121,7 @@ module.exports = (app, passport, connection) => {
   	let query = connection.query(sql, (err, result) => {
   		if (err) throw err;
   		console.log(result);
-  		res.send("Post deleted");
+  		res.redirect('/');
   	});
   });
 
@@ -133,6 +133,19 @@ module.exports = (app, passport, connection) => {
   		res.end('Fetched...');
   	});
   });
+
+// signup page
+  app.post('/signup', passport.authenticate('local-signup', {
+    successRedirect: '/profile', // profile
+    failureRedirect: '/signup',
+    failureFlash: true
+  }));
+
+  app.post('/login', passport.authenticate('local-login', {
+    successRedirect: '/profile',
+    failureRedirect: '/login',
+    failureFlash: true  // allow flash messages
+  }))
 
   // POST to Database,
   app.post("/post/validate", [
