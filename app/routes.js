@@ -42,6 +42,10 @@ module.exports = (app, passport, connection) => {
   	res.render("post.ejs");
   });
 
+  app.get("/profile", (req, res) => {
+    res.render("profile.ejs");
+  });
+
   app.post("/search", (req, res) => {
   	let jobTitle = req.body.search;
   	console.log(jobTitle);
