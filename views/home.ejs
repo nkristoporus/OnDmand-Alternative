@@ -17,15 +17,15 @@
 		<div id="filter" class="col-2 border-right">
 			<h4>Sort By</h4>
 			<div class="list-group">
-			  <a href="/orderDate" class="list-group-item list-group-item-action active">
+			  <a href="/orderBy/date" class="list-group-item list-group-item-action <% if(orderBy =="date"){%> <%= "active"%> <%}%>">
 			    Date
 			  </a>
-			  <a href="/orderBy/wage" class="list-group-item list-group-item-action">Wages</a>
-			  <a href="/orderBy/title" class="list-group-item list-group-item-action">Alphabetical</a>
+			  <a href="/orderBy/wage" class="list-group-item list-group-item-action <% if(orderBy =="wage"){%> <%= "active"%> <%}%>">Wages</a>
+			  <a href="/orderBy/title" class="list-group-item list-group-item-action <% if(orderBy =="title"){%> <%= "active"%> <%}%>">Alphabetical</a>
 			</div>
 		</div>
 		<div id="result" class="col-10">
-			<h4>Results for
+			<h4>Results for</h4>
 				<table id="table" border = "1" >
 				<table id="table" class="table table-bordered table-striped">
 						<thead>

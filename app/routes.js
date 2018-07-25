@@ -7,7 +7,7 @@ module.exports = (app, passport, connection) => {
   	connection.query(`SELECT * FROM jobsDB ORDER BY date ASC`, (err, result) => {
   		//console.log(result);
   		if (err) throw err;
-  		res.render("home.ejs", { jobList: result });
+  		res.render("home.ejs", { jobList: result, orderBy: "date" });
   	});
   });
 
@@ -16,7 +16,7 @@ module.exports = (app, passport, connection) => {
   	connection.query(`SELECT * FROM jobsDB ORDER BY ${req.params.filter}`, (err, result) => {
   		//console.log(result);
   		if (err) throw err;
-  		res.render("home.ejs", { jobList: result });
+  		res.render("home.ejs", { jobList: result, orderBy: req.params.filter });
   	});
   });
 
@@ -24,7 +24,7 @@ module.exports = (app, passport, connection) => {
   app.get("/", function(req, res){
   	connection.query("SELECT * FROM jobsDB", (err, result) => {
   		if (err) throw err;
-  		res.render("home.ejs", { jobList: result });
+  		res.render("home.ejs", { jobList: result, orderBy: "date" });
   	});
   });
 
