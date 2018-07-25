@@ -18,7 +18,7 @@ const connection = mysql.createConnection({
 	database: 'jobsDB'
 });
 
-mongoose.connect(configDB.url);	// connect to database
+mongoose.connect('localhost/config');	// connect to database
 
 require('./config/passport')(passport); // passport config
 
