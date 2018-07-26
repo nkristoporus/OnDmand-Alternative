@@ -1,13 +1,12 @@
 const { check, validationResult } = require('express-validator/check');
 
 module.exports = (app, passport, connection) => {
-
   // order date ASCENDING
   app.get("/orderDate", (req, res) => {
   	connection.query(`SELECT * FROM jobsDB ORDER BY date ASC`, (err, result) => {
   		//console.log(result);
   		if (err) throw err;
-  		res.render("home.ejs", { jobList: result });
+  		res.render("home.ejs", { jobList: result, orderBy: "date" });
   	});
   });
 
@@ -16,7 +15,7 @@ module.exports = (app, passport, connection) => {
   	connection.query(`SELECT * FROM jobsDB ORDER BY ${req.params.filter}`, (err, result) => {
   		//console.log(result);
   		if (err) throw err;
-  		res.render("home.ejs", { jobList: result });
+  		res.render("home.ejs", { jobList: result, orderBy: req.params.filter });
   	});
   });
 
@@ -24,7 +23,7 @@ module.exports = (app, passport, connection) => {
   app.get("/", function(req, res){
   	connection.query("SELECT * FROM jobsDB", (err, result) => {
   		if (err) throw err;
-  		res.render("home.ejs", { jobList: result });
+  		res.render("home.ejs", { jobList: result, orderBy: "date" });
   	});
   });
 
@@ -42,6 +41,26 @@ module.exports = (app, passport, connection) => {
   	res.render("post.ejs");
   });
 
+  app.get("/profile", isLoggedIn, (req, res) => {
+    res.render("profile.ejs", {
+      name: req.user.local.name,
+      email: req.user.local.email,
+      age: req.user.local.age,
+      phone: req.user.local.phone,
+      gender: req.user.local.gender,
+      edu: req.user.local.edu,
+    });
+  });
+
+  app.get("/chatroom", (req, res) => {
+    res.render("chatbox");
+  })
+
+  app.get("/logout", (req, res) => {
+    req.logout();
+    res.redirect('/');
+  })
+
   app.post("/search", (req, res) => {
   	let jobTitle = req.body.search;
   	console.log(jobTitle);
@@ -50,7 +69,7 @@ module.exports = (app, passport, connection) => {
   	let query = connection.query(sql, (err, result) => {
   		if (err) throw err;
   		console.log(result);
-  		res.render("home.ejs", {jobList: result});
+  		res.render("home.ejs", {jobList: result, orderBy: "date"});
   		// res.send('Post fetched..');
   	});
   });
@@ -121,7 +140,7 @@ module.exports = (app, passport, connection) => {
   	let query = connection.query(sql, (err, result) => {
   		if (err) throw err;
   		console.log(result);
-  		res.send("Post deleted");
+  		res.redirect('/');
   	});
   });
 
@@ -133,6 +152,19 @@ module.exports = (app, passport, connection) => {
   		res.end('Fetched...');
   	});
   });
+
+  // signup page
+  app.post('/signup', passport.authenticate('local-signup', {
+    successRedirect: '/profile', // profile
+    failureRedirect: '/signup',
+    failureFlash: true
+  }));
+
+  app.post('/login', passport.authenticate('local-login', {
+    successRedirect: '/profile',
+    failureRedirect: '/login',
+    failureFlash: true  // allow flash messages
+  }))
 
   // POST to Database,
   app.post("/post/validate", [
@@ -170,5 +202,5 @@ const isLoggedIn = (req, res, next) => {
   if (req.isAuthenticated())
     return next();  // carry on
 
-  res.redirect('/');  // not isAuthenticated
+  res.redirect('/login');  // not isAuthenticated
 }
