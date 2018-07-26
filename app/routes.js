@@ -60,7 +60,7 @@ module.exports = (app, passport, connection) => {
   	let query = connection.query(sql, (err, result) => {
   		if (err) throw err;
   		console.log(result);
-  		res.render("home.ejs", {jobList: result, orderBy:date});
+  		res.render("home.ejs", {jobList: result, orderBy: "date"});
   		// res.send('Post fetched..');
   	});
   });
