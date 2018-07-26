@@ -1,7 +1,6 @@
 const { check, validationResult } = require('express-validator/check');
 
 module.exports = (app, passport, connection) => {
-
   // order date ASCENDING
   app.get("/orderDate", (req, res) => {
   	connection.query(`SELECT * FROM jobsDB ORDER BY date ASC`, (err, result) => {
@@ -42,9 +41,16 @@ module.exports = (app, passport, connection) => {
   	res.render("post.ejs");
   });
 
-  app.get("/profile", (req, res) => {
-    res.render("profile.ejs");
+  app.get("/profile", isLoggedIn, (req, res) => {
+    res.render("profile.ejs", {
+      user: req.user
+    });
   });
+
+  app.get("/logout", (req, res) => {
+    req.logout();
+    res.redirect('/');
+  })
 
   app.post("/search", (req, res) => {
   	let jobTitle = req.body.search;
@@ -138,7 +144,7 @@ module.exports = (app, passport, connection) => {
   	});
   });
 
-// signup page
+  // signup page
   app.post('/signup', passport.authenticate('local-signup', {
     successRedirect: '/profile', // profile
     failureRedirect: '/signup',
@@ -187,5 +193,5 @@ const isLoggedIn = (req, res, next) => {
   if (req.isAuthenticated())
     return next();  // carry on
 
-  res.redirect('/');  // not isAuthenticated
+  res.redirect('/login');  // not isAuthenticated
 }
