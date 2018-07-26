@@ -52,6 +52,10 @@ module.exports = (app, passport, connection) => {
     });
   });
 
+  app.get("/chatroom", (req, res) => {
+    res.render("chatbox");
+  })
+
   app.get("/logout", (req, res) => {
     req.logout();
     res.redirect('/');
