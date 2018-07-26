@@ -42,6 +42,11 @@ module.exports = passport => {
           const newUser = new User();
           newUser.local.email = email;
           newUser.local.password = newUser.generateHash(password);
+          newUser.local.name = req.body.name;
+          newUser.local.age = req.body.age;
+          newUser.local.gender = req.body.gender;
+          newUser.local.edu = req.body.edu;
+          newUser.local.phone = req.body.phone;
           // save usernameField
           newUser.save(err => {
             if (err) throw err;

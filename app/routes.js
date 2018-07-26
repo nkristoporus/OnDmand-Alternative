@@ -43,7 +43,12 @@ module.exports = (app, passport, connection) => {
 
   app.get("/profile", isLoggedIn, (req, res) => {
     res.render("profile.ejs", {
-      age: req.user.age,
+      name: req.user.local.name,
+      email: req.user.local.email,
+      age: req.user.local.age,
+      phone: req.user.local.phone,
+      gender: req.user.local.gender,
+      edu: req.user.local.edu,
     });
   });
 
