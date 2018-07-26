@@ -43,7 +43,7 @@ module.exports = (app, passport, connection) => {
 
   app.get("/profile", isLoggedIn, (req, res) => {
     res.render("profile.ejs", {
-      user: req.user
+      age: req.user.age,
     });
   });
 
@@ -60,7 +60,7 @@ module.exports = (app, passport, connection) => {
   	let query = connection.query(sql, (err, result) => {
   		if (err) throw err;
   		console.log(result);
-  		res.render("home.ejs", {jobList: result});
+  		res.render("home.ejs", {jobList: result, orderBy:date});
   		// res.send('Post fetched..');
   	});
   });
