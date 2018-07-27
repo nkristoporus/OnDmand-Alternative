@@ -8,24 +8,21 @@
 </head>
 <body>
 	<nav class="navbar navbar-light bg-light">
-	  <a class="navbar-brand" href="home.html">OnDmand</a>
-	  <form class="form-inline" method="get">
-	    <input class="form-control mr-sm-2" type="search" placeholder="Search Jobs" aria-label="Search">
+	  <a class="navbar-brand" href="/">OnDmand</a>
+	  <ul class="navbar-nav">
+	  <li>
+	  <a class="nav-link" href="/chatroom">Chatroom</a>
+	</li>
+	</ul>
+	   <div class="col-8">
+	  <form class="form-inline"  action="/search" method="post">
+	    <input name="search" class="form-control w-75 mr-sm-2" type="search" placeholder="Search Jobs" aria-label="Search">
 		<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-		<a href="post.html">Post a Job</a>
+		<a href="/post">Post a Job</a>
 	  </form>
-		<i class="fas fa-user fa-2x ml-2"></i>
-	</nav>
-
-	<div class="container-fluid">
-		<div class="row">
-			<div id="filter" class="col-2 border-right">
-				<h4>Filters</h4>
-			</div>
-			<div id="result">
-				<h4>Results for <strong>search-term</strong></h4>
-			</div>
 		</div>
-	</div>
+		<a href="/profile" style="color: black"><i class="fas fa-user fa-2x ml-2"></i></a>
+		<a href="/logout">Logout</a>
+	</nav>
 </body>
 </html>
