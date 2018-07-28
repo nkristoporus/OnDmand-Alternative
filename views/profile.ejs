@@ -1,32 +1,51 @@
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
-<script defer src="https://use.fontawesome.com/releases/v5.1.0/js/all.js" integrity="sha384-3LK/3kTpDE/Pkp8gTNp2gR/2gOiwQ6QaO7Td0zV76UFJVhqLl4Vl3KL1We6q6wR9" crossorigin="anonymous"></script>
-<nav class="navbar navbar-light bg-light">
+<!DOCTYPE html>
+<html>
+<head>
+	<title>OnDmand</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+	<script defer src="https://use.fontawesome.com/releases/v5.1.0/js/all.js" integrity="sha384-3LK/3kTpDE/Pkp8gTNp2gR/2gOiwQ6QaO7Td0zV76UFJVhqLl4Vl3KL1We6q6wR9" crossorigin="anonymous"></script>
+	<link rel="stylesheet" type="text/css" href="home.css">
+</head>
+<body>
+	<nav class="navbar navbar-light bg-light">
 	  <a class="navbar-brand" href="/">OnDmand</a>
+	   <ul class="navbar-nav">
+	  <li>
 	  <a class="nav-link" href="/chatroom">Chatroom</a>
+	</li>
+	</ul>
 	   <div class="col-8">
-    <form class="form-inline"  action="/search" method="post">
-      <input name="search" class="form-control w-75 mr-sm-2" type="search" placeholder="Search Jobs" aria-label="Search">
-    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-    <a href="/post">Post a Job</a>
-    </form>
-    </div>
+	  <form class="form-inline"  action="/search" method="post">
+	    <input name="search" class="form-control w-75 mr-sm-2" type="search" placeholder="Search Jobs" aria-label="Search">
+		<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+		 <ul class="navbar-nav">
+	  <li>
+	  <a class="nav-link ml-2" href="/post">Post a Job</a>
+	</li>
+	</ul>
+	  </form>
+		</div>
 		<a href="/profile" style="color: black"><i class="fas fa-user fa-2x ml-2"></i></a>
-    <a href="/logout">Logout</a>
+		<ul class="navbar-nav">
+	  <li>
+	  <a class="nav-link" href="/logout">Logout</a>
+	</li>
+	</ul>
 	</nav>
 
 	<div class="container mt-4">
-		<h2 id="profileName" class=""><%= name %></h1>
+		<h2 id="profileName" class=""><%= user._id %></h1>
 			<div class="row">
 				<div class="col-1"></div>
 				<div class=""><h4>Basic Info</h4></div>
 			</div>
 			<div class="row">
 				<div class="col-2 text-right"><strong>Age</strong></div>
-				<div><%= age %></div>
+				<div><%= user.local.age %></div>
 			</div>
 			<div class="row">
 				<div class="col-2 text-right"><strong>Gender</strong></div>
-				<div><%= gender %></div>
+				<div><%= user.local.gender %></div>
 			</div>
 
 			<div class="row mt-3">
@@ -44,7 +63,7 @@
 
 			<div class="row">
 				<div class="col-2 text-right"><strong>Last Education</strong></div>
-				<div><%= edu %></div>
+				<div><%= user.local.edu %></div>
 			</div>
 			<div class="row mt-3">
 				<div class="col-1"></div>
@@ -52,11 +71,13 @@
 			</div>
 			<div class="row">
 				<div class="col-2 text-right"><strong>E-mail</strong></div>
-				<div><%= email %></div>
+				<div><%= user.local.email %></div>
 			</div>
 			<div class="row">
 				<div class="col-2 text-right"><strong>Phone</strong></div>
-				<div><%= phone %></div>
+				<div><%= user.local.phone %></div>
 			</div>
 
 	</div>
+</body>
+</html>
