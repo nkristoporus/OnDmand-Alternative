@@ -34,18 +34,18 @@
 	</nav>
 
 	<div class="container mt-4">
-		<h2 id="profileName" class=""><%= name %></h1>
+		<h2 id="profileName" class=""><%= user._id %></h1>
 			<div class="row">
 				<div class="col-1"></div>
 				<div class=""><h4>Basic Info</h4></div>
 			</div>
 			<div class="row">
 				<div class="col-2 text-right"><strong>Age</strong></div>
-				<div><%= age %></div>
+				<div><%= user.local.age %></div>
 			</div>
 			<div class="row">
 				<div class="col-2 text-right"><strong>Gender</strong></div>
-				<div><%= gender %></div>
+				<div><%= user.local.gender %></div>
 			</div>
 
 			<div class="row mt-3">
@@ -63,7 +63,7 @@
 
 			<div class="row">
 				<div class="col-2 text-right"><strong>Last Education</strong></div>
-				<div><%= edu %></div>
+				<div><%= user.local.edu %></div>
 			</div>
 			<div class="row mt-3">
 				<div class="col-1"></div>
@@ -71,11 +71,11 @@
 			</div>
 			<div class="row">
 				<div class="col-2 text-right"><strong>E-mail</strong></div>
-				<div><%= email %></div>
+				<div><%= user.local.email %></div>
 			</div>
 			<div class="row">
 				<div class="col-2 text-right"><strong>Phone</strong></div>
-				<div><%= phone %></div>
+				<div><%= user.local.phone %></div>
 			</div>
 
 	</div>
