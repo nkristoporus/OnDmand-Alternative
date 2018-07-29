@@ -54,6 +54,10 @@
 										<th>Date</th>
 										<th>Wage</th>
 										<th>Description</th>
+										<th>User email</th>
+										<th></th>
+										<th></th>
+										<th>Chat!</th>
 								</tr>
 						</thead>
 						 <tbody>
@@ -64,6 +68,7 @@
 										<td><%= job.date %></td>
 										<td><%= job.wage %></td>
 										<td><%= job.description %></td>
+										<td><%= job.username %></td>
 										<td>
 											<a href="/deletepost/<%= job.id %>">
 											<button id="delete" type="button" class="btn btn-primary">Delete</button>
@@ -72,6 +77,11 @@
 										<td>
 											<a href="/updatepost/<%= job.id %>">
 											<button id="update" type="button" class="btn btn-primary">Update</button>
+											</a>
+										</td>
+										<td>
+											<a href="/chatroom/<%= job.id %>">
+											<button id="chat" type="button" class="btn btn-primary">Chat</button>
 											</a>
 										</td>
 								</tr>
