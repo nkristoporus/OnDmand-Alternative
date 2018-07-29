@@ -1,12 +1,15 @@
 const { check, validationResult } = require('express-validator/check');
 
+const User = require('./models/user.js');
+const Job = require('./models/jobs.js');
+
 module.exports = (app, passport, connection) => {
   // order date ASCENDING
   app.get("/orderDate", (req, res) => {
   	connection.query(`SELECT * FROM jobsDB ORDER BY date ASC`, (err, result) => {
   		//console.log(result);
   		if (err) throw err;
-  		res.render("home.ejs", { jobList: result, orderBy: "date" });
+  		res.render("home.ejs", { jobList: result, orderBy: "date", search: false, searchTerm: ""});
   	});
   });
 
@@ -15,7 +18,7 @@ module.exports = (app, passport, connection) => {
   	connection.query(`SELECT * FROM jobsDB ORDER BY ${req.params.filter}`, (err, result) => {
   		//console.log(result);
   		if (err) throw err;
-  		res.render("home.ejs", { jobList: result, orderBy: req.params.filter });
+  		res.render("home.ejs", { jobList: result, orderBy: req.params.filter, search: false, searchTerm: "" });
   	});
   });
 
@@ -23,7 +26,7 @@ module.exports = (app, passport, connection) => {
   app.get("/", function(req, res){
   	connection.query("SELECT * FROM jobsDB", (err, result) => {
   		if (err) throw err;
-  		res.render("home.ejs", { jobList: result, orderBy: "date" });
+  		res.render("home.ejs", { jobList: result, orderBy: "date", search: false, searchTerm: "" });
   	});
   });
 
@@ -37,8 +40,10 @@ module.exports = (app, passport, connection) => {
     res.render('signup.ejs', { message: req.flash('signupMessage') });
   });
 
-  app.get("/post", (req, res) => {
-  	res.render("post.ejs");
+  app.get("/post", isLoggedIn, (req, res) => {
+  	res.render("post.ejs", {
+      user: req.user
+    });
   });
 
   app.get("/profile", isLoggedIn, (req, res) => {
@@ -47,8 +52,8 @@ module.exports = (app, passport, connection) => {
     });
   });
 
-  app.get("/chatroom", (req, res) => {
-    res.render("chatbox");
+  app.get("/chatroom/:id", (req, res) => {
+    res.render("chatbox.ejs");
   })
 
   app.get("/logout", (req, res) => {
@@ -64,7 +69,7 @@ module.exports = (app, passport, connection) => {
   	let query = connection.query(sql, (err, result) => {
   		if (err) throw err;
   		console.log(result);
-  		res.render("home.ejs", {jobList: result, orderBy: "date"});
+  		res.render("home.ejs", {jobList: result, orderBy: "date", search: true, searchTerm: req.body.search});
   		// res.send('Post fetched..');
   	});
   });
@@ -90,7 +95,7 @@ module.exports = (app, passport, connection) => {
 
   // Create TABLE
   app.get('/createJobTable', (req, res) => {
-  let sql = 'CREATE TABLE jobsDB(id int AUTO_INCREMENT, title VARCHAR(255), location VARCHAR(255), date DATE, wage INTEGER, description VARCHAR(1000), PRIMARY KEY (id))';
+  let sql = 'CREATE TABLE jobsDB(id int AUTO_INCREMENT, title VARCHAR(255), location VARCHAR(255), date DATE, wage INTEGER, description VARCHAR(1000), username VARCHAR(255), PRIMARY KEY (id))';
   	connection.query(sql, (err, result) => {
   		if (err) throw err;
   		console.log(result);
@@ -161,6 +166,7 @@ module.exports = (app, passport, connection) => {
     failureFlash: true  // allow flash messages
   }))
 
+
   // POST to Database,
   app.post("/post/validate", [
   	check("jobTitle").exists(),
@@ -180,13 +186,14 @@ module.exports = (app, passport, connection) => {
   		location: req.body.jobLocation,
   		date: req.body.jobDate,
   		wage: req.body.jobPay,
-  		description: req.body.jobDescription
+  		description: req.body.jobDescription,
+      username: req.user.local.email
   	}
 
+    // console.log(req.user);
   	let sql = 'INSERT INTO jobsDB SET ?';
   	let query = connection.query(sql, post, (err, result) => {
   		if (err) throw err;
-  		console.log(result);
   		res.redirect('/');
   	});
 

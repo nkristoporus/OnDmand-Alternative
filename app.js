@@ -33,6 +33,7 @@ app.set('view engine', 'ejs'); // set up ejs for templating
 
 // possport session
 app.use(express.static('public'));
+
 app.use(session({ secret: 'bobbylovestoplayballs' }));
 app.use(passport.initialize());
 app.use(passport.session());	// persistent login sessions
@@ -43,7 +44,7 @@ require('./app/routes.js')(app, passport, connection);
 
 
 // launch =================================================
-server = app.listen(5000, process.env.IP);
+const server = app.listen(5000, process.env.IP);
 
 //socket.io instantiation
 const io = require("socket.io")(server)
@@ -70,4 +71,4 @@ io.on('connection', (socket) => {
     socket.on('typing', (data) => {
     	socket.broadcast.emit('typing', {username : socket.username})
     })
-})
+});

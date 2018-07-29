@@ -9,11 +9,6 @@
 <body>
 	<nav class="navbar navbar-light bg-light">
 	  <a class="navbar-brand" href="/">OnDmand</a>
-	   <ul class="navbar-nav">
-	  <li>
-	  <a class="nav-link" href="/chatroom">Chatroom</a>
-	</li>
-	</ul>
 	   <div class="col-8">
 	  <form class="form-inline"  action="/search" method="post">
 	    <input name="search" class="form-control w-75 mr-sm-2" type="search" placeholder="Search Jobs" aria-label="Search">
@@ -25,7 +20,7 @@
 	</ul>
 	  </form>
 		</div>
-		<a href="/profile" style="color: black"><i class="fas fa-user fa-2x ml-2"></i></a>
+		<a href="/profile" style="color: black"><i class="fas fa-user fa-2x ml-5"></i></a>
 		<ul class="navbar-nav">
 	  <li>
 	  <a class="nav-link" href="/logout">Logout</a>
@@ -44,7 +39,12 @@
 			</div>
 		</div>
 		<div id="result" class="col-10">
-			<h4>Results for</h4>
+			<% if(jobList.length == 0){ %>
+				<h3>No Results Found</h3>
+			<% } else {%>
+			<% if(search){ %>
+			<h4>Results for <strong><%= searchTerm %></strong></h4>
+			<% } %>
 				<table id="table" border = "1" >
 				<table id="table" class="table table-bordered table-striped">
 						<thead>
@@ -54,6 +54,10 @@
 										<th>Date</th>
 										<th>Wage</th>
 										<th>Description</th>
+										<th>User email</th>
+										<th></th>
+										<th></th>
+										<th>Chat!</th>
 								</tr>
 						</thead>
 						 <tbody>
@@ -64,6 +68,7 @@
 										<td><%= job.date %></td>
 										<td><%= job.wage %></td>
 										<td><%= job.description %></td>
+										<td><%= job.username %></td>
 										<td>
 											<a href="/deletepost/<%= job.id %>">
 											<button id="delete" type="button" class="btn btn-primary">Delete</button>
@@ -74,11 +79,16 @@
 											<button id="update" type="button" class="btn btn-primary">Update</button>
 											</a>
 										</td>
+										<td>
+											<a href="/chatroom/<%= job.id %>">
+											<button id="chat" type="button" class="btn btn-primary">Chat</button>
+											</a>
+										</td>
 								</tr>
 						 <% }) %>
 						 </tbody>
 				</table>
-
+				<% } %>
 		</div>
 	</div>
 </div>
