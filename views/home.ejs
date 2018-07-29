@@ -7,17 +7,21 @@
 </head>
 <body>
 	<nav class="navbar navbar-light bg-light">
-	  <a class="navbar-brand" href="/">OnDmand</a>
-	   <div class="col-8">
-	  <form class="form-inline"  action="/search" method="post">
-	    <input name="search" class="form-control w-75 mr-sm-2" type="search" placeholder="Search Jobs" aria-label="Search">
-		<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-		 <ul class="navbar-nav">
-	  <li>
-	  <a class="nav-link ml-2" href="/post">Post a Job</a>
-	</li>
-	</ul>
-	  </form>
+		<a class="navbar-brand" href="/">
+			<h2>OnDmand</h2>
+		</a>
+		<div class="col-8">
+			<form class="form-inline"  action="/search" method="post">
+			  <input name="search" class="form-control w-75 mr-sm-2" type="search" placeholder="Search Jobs" aria-label="Search">
+					<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+				 	<ul class="navbar-nav">
+			  <li>
+			  	<a class="nav-link ml-2" href="/post">
+							<span style="padding: 0 15px 0 15px">Post a Job</span>
+					</a>
+				</li>
+				</ul>
+			 </form>
 		</div>
 		<a href="/profile" style="color: black"><i class="fas fa-user fa-2x ml-5"></i></a>
 		<ul class="navbar-nav">
@@ -29,19 +33,20 @@
 
 <div class="container-fluid">
 	<div class="row">
-		<div id="filter" class="col-2 border-right">
+		<div id="filter" class="col-2 border-right" style="margin-top: 15px">
 			<h4>Sort By</h4>
 			<div class="list-group">
 			  <a href="/orderBy/date" class="list-group-item list-group-item-action <% if(orderBy =="date"){%> <%= "active"%> <%}%>">Date</a>
 			  <a href="/orderBy/wage" class="list-group-item list-group-item-action <% if(orderBy =="wage"){%> <%= "active"%> <%}%>">Wages</a>
 			  <a href="/orderBy/title" class="list-group-item list-group-item-action <% if(orderBy =="title"){%> <%= "active"%> <%}%>">Alphabetical</a>
 			</div>
-			<h4>Filter</h4>
-			<div class="list-group">
-			<a href="/unaccepted" class="list-group-item list-group-item-action">Pending</a>
+
+			<div class="list-group" style="margin-top:15px">
+				<h4>Filter</h4>
+				<a href="/unaccepted" class="list-group-item list-group-item-action">Pending</a>
 			</div>
 		</div>
-		<div id="result" class="col-10">
+		<div id="result" class="col-10" style="padding-top: 20px">
 			<% if(jobList.length == 0){ %>
 				<h3>No Results Found</h3>
 			<% } else {%>
@@ -58,9 +63,7 @@
 										<th>Wage</th>
 										<th>Description</th>
 										<th>User email</th>
-										<th></th>
-										<th></th>
-										<th>Chat!</th>
+
 								</tr>
 						</thead>
 						 <tbody>
@@ -84,7 +87,7 @@
 										</td>
 										<td>
 											<a href="/chatroom/<%= job.id %>">
-											<button id="chat" type="button" class="btn btn-primary">Chat</button>
+											<button id="chat" type="button" class="btn btn-secondary	">Chat</button>
 											</a>
 										</td>
 										<td>
