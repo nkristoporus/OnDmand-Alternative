@@ -204,7 +204,7 @@ module.exports = (app, passport, connection) => {
   		date: req.body.jobDate,
   		wage: req.body.jobPay,
   		description: req.body.jobDescription,
-      //username: req.user.local.email,
+      username: req.user.local.email,
       accepted: 0
   	}
 
