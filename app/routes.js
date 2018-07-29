@@ -22,6 +22,14 @@ module.exports = (app, passport, connection) => {
   	});
   });
 
+  app.get("/unaccepted", (req, res) => {
+    connection.query(`SELECT * FROM jobsDB WHERE accepted != 1`, (err, result) => {
+      //console.log(result);
+      if (err) throw err;
+      res.render("home.ejs", { jobList: result, orderBy: req.params.filter, search: false, searchTerm: "" });
+    });
+  });
+
   // HOME PAGE
   app.get("/", function(req, res){
   	connection.query("SELECT * FROM jobsDB", (err, result) => {
@@ -95,7 +103,7 @@ module.exports = (app, passport, connection) => {
 
   // Create TABLE
   app.get('/createJobTable', (req, res) => {
-  let sql = 'CREATE TABLE jobsDB(id int AUTO_INCREMENT, title VARCHAR(255), location VARCHAR(255), date DATE, wage INTEGER, description VARCHAR(1000), username VARCHAR(255), PRIMARY KEY (id))';
+  let sql = 'CREATE TABLE jobsDB(id int AUTO_INCREMENT, title VARCHAR(255), location VARCHAR(255), date DATE, wage INTEGER, description VARCHAR(1000), username VARCHAR(255), accepted TINYINT(1), PRIMARY KEY (id))';
   	connection.query(sql, (err, result) => {
   		if (err) throw err;
   		console.log(result);
@@ -144,6 +152,15 @@ module.exports = (app, passport, connection) => {
   	});
   });
 
+  app.get('/acceptpost/:id', (req, res) => {
+    let sql = `UPDATE jobsDB SET accepted = 1 WHERE id = ${req.params.id}`;
+    let query = connection.query(sql, (err, result) => {
+      if (err) throw err;
+      console.log(result);
+      res.redirect('/');
+    })
+  });
+
   // get all
   app.get("/jobList", (req, res) => {
   	connection.query("SELECT * FROM jobsDB", (err, result) => {
@@ -187,7 +204,8 @@ module.exports = (app, passport, connection) => {
   		date: req.body.jobDate,
   		wage: req.body.jobPay,
   		description: req.body.jobDescription,
-      username: req.user.local.email
+      //username: req.user.local.email,
+      accepted: 0
   	}
 
     // console.log(req.user);

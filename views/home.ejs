@@ -36,6 +36,10 @@
 			  <a href="/orderBy/wage" class="list-group-item list-group-item-action <% if(orderBy =="wage"){%> <%= "active"%> <%}%>">Wages</a>
 			  <a href="/orderBy/title" class="list-group-item list-group-item-action <% if(orderBy =="title"){%> <%= "active"%> <%}%>">Alphabetical</a>
 			</div>
+			<h4>Filter</h4>
+			<div class="list-group">
+			<a href="/unaccepted" class="list-group-item list-group-item-action">Unaccepted</a>
+			</div>
 		</div>
 		<div id="result" class="col-10">
 			<% if(jobList.length == 0){ %>
@@ -81,6 +85,11 @@
 										<td>
 											<a href="/chatroom/<%= job.id %>">
 											<button id="chat" type="button" class="btn btn-primary">Chat</button>
+											</a>
+										</td>
+										<td>
+											<a href="/acceptpost/<%= job.id %>">
+											<button id="update" type="button" class="btn btn-success">Accept</button>
 											</a>
 										</td>
 								</tr>
