@@ -47,6 +47,15 @@ module.exports = passport => {
           newUser.local.gender = req.body.gender;
           newUser.local.edu = req.body.edu;
           newUser.local.phone = req.body.phone;
+          newUser.local.job1 = req.body.job1;
+          newUser.local.role1 = req.body.role1;
+          newUser.local.description1 = req.body.description1;
+          newUser.local.job2 = req.body.job2;
+          newUser.local.description2 = req.body.description2;
+          newUser.local.role2 = req.body.role2;
+          newUser.local.job3 = req.body.job3;
+          newUser.local.role3 = req.body.role3;
+          newUser.local.description3 = req.body.description3;
           // save usernameField
           newUser.save(err => {
             if (err) throw err;

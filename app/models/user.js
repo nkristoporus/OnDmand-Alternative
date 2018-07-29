@@ -13,8 +13,16 @@ var userSchema = mongoose.Schema({
         name         : String,
         gender       : String,
         edu          : String,
-        work         : [String],
-        age          : String
+        age          : String,
+        job1         : String,
+        role1        : String,
+        description1 : String,
+        job2         : String,
+        role2        : String,
+        description2 : String,
+        job3         : String,
+        role3        : String,
+        description3 : String,
     },
     facebook         : {
         id           : String,
