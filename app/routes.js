@@ -61,7 +61,7 @@ module.exports = (app, passport, connection) => {
   });
 
   app.get("/chatroom/:id", (req, res) => {
-    res.render("chatbox.ejs");
+    res.render("chatbox.ejs", { user: req.user});
   })
 
   app.get("/logout", (req, res) => {
