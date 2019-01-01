@@ -89,7 +89,7 @@
           handleLocationError(false, infoWindow, map.getCenter())
         }
       
-       const handleLocationError = (hasGeoLocation, infoWindow, position) {
+       const handleLocationError = (hasGeoLocation, infoWindow, position) => {
           infoWindow.setPosition(position);
           infoWindow.setContent(hasGeoLocation ? 
                                 'Error: Service failed' :
