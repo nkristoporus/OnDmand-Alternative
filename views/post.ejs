@@ -4,6 +4,13 @@
   <title>OnDmand</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
   <script defer src="https://use.fontawesome.com/releases/v5.1.0/js/all.js" integrity="sha384-3LK/3kTpDE/Pkp8gTNp2gR/2gOiwQ6QaO7Td0zV76UFJVhqLl4Vl3KL1We6q6wR9" crossorigin="anonymous"></script>
+  <style>
+    #map {
+      width: 100%;
+      height: 400px;
+      background-color: grey;
+    }
+  </style>
 </head>
 <body>
   <nav class="navbar navbar-light bg-light">
@@ -36,12 +43,67 @@
       <input type="text" class="form-control" name="jobTitle">
     </div>
   </div>
+  
+  <!-- location with Google Maps API-->
   <div class="form-group row">
     <label for="jobLocation" class="col-sm-2 col-form-label">Location</label>
-    <div class="col-sm-10">
+    <!-- <div class="col-sm-10">
       <input type="text" class="form-control" name="jobLocation">
-    </div>
+    </div> -->
+    <div id="map"></div>
+    <script>
+      var map;
+      var infoWindow;
+
+      // location of some location
+      const jakarta = {
+        lat: -6.21462,
+        lng: 106.84513
+      }
+
+      function initMap() {
+        map = new google.maps.Map(document.getElementById('map'), {
+            center: jakarta,
+            zoom: 12
+        });
+
+        infoWindow = new google.maps.InfoWindow;
+
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(position => {
+            const pos = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude
+            };
+
+            locationStr = `Found your location at latitude: ${pos.lat} & 
+                    longitude: ${pos.lng}`;
+            
+            infoWindow.setPosition(pos)
+            infoWindow.setContent(locationStr)
+            infoWindow.open(map)
+            map.setCenter(pos)
+
+          }, () => handleLocationError(true, infoWindow, map.getCenter()));
+        } else {
+          handleLocationError(false, infoWindow, map.getCenter())
+        }
+      
+       const handleLocationError = (hasGeoLocation, infoWindow, position) {
+          infoWindow.setPosition(position);
+          infoWindow.setContent(hasGeoLocation ? 
+                                'Error: Service failed' :
+                                'Error: browser doesn\'t support geolocation')
+          infoWindow.open(map);
+       } 
+
+      }
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA43luYNQlfAxdllb69f6c_yGGQqZJNqo4&callback=initMap">
+    </script>
   </div>
+
   <div class="form-group row">
     <label for="jobDate" class="col-sm-2 col-form-label">Date</label>
     <div class="col-sm-10">
